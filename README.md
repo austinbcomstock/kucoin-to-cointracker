@@ -21,20 +21,20 @@ OR
 
 3. `pip install -r requirements.txt`
 
-4. Move the the TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv is in the `kucoin-to-cointracker` folder
+4. Move the the TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv to the `kucoin-to-cointracker` folder
 
 ## Run the script
 
-`pipenv run python kucoin_to_cointracker.py -f TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv -o kucoin.csv`
+`pipenv run python kucoin_to_cointracker.py -f /path/to/KUCOIN.csv
+
+`pipenv run python kucoin_to_cointracker.py -f TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv -o cointracker.csv`
 
 OR
 
-`python kucoin_to_cointracker.py -f TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv`
-
-If its another location, `python kucoin_to_cointracker.py -f ./full/location/to/the/TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv -o ./full/location/to/the/kucoin.csv`
+`python kucoin_to_cointracker.py -f TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv -o cointracker.csv`
 
 ## See the created files
-One csv file output
+Default is ./cointracker.csv (can be changed with -o FILENAME)
 
 ## Upload the files into Cointracker
 Upload the file into Cointracker as a manual wallet with whatever nickname you want.
