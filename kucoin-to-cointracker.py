@@ -36,7 +36,7 @@ def main(args):
         
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description=f'')
+    parser = argparse.ArgumentParser(description=f'Kucoin Margin export CSV to Cointracker compatible CSV file')
     # Positional
     parser.add_argument('-f', '--file', type=str, metavar='',help="Location of the Kucoin Margin export CSV file")
     parser.add_argument('-o', '--output', type=str, default='./kucoin.csv', metavar='',help="Location to output the Cointracker compatible CSV file")
