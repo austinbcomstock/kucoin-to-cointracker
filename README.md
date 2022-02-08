@@ -25,7 +25,7 @@ OR
 
 ## Run the script
 
-`pipenv run python kucoin_to_cointracker -f TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv -o kucoin.csv`
+`pipenv run python kucoin_to_cointracker.py -f TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv -o kucoin.csv`
 
 OR
 
