@@ -7,7 +7,7 @@ There is currently no third-party integration between Cointracker and Kucoin Mar
 ## Pre-requisites
 * python3
 * pip / pipenv
-* TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv file (This file can be exported from Kucoin.
+* TRADE_xxxxxxxxxxxxxxxxxxxxxxxx.csv file (This file can be exported from Kucoin (inside the zip file you download)
 
 ## Installation
 
