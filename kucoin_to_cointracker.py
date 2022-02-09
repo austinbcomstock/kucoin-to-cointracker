@@ -2,20 +2,33 @@ import pandas as pd
 import argparse
 
 def load_kucoin_file(file):
-    return pd.read_csv(file, index_col=False)
+    try:
+        return pd.read_csv(file, index_col=False)
+    except Exception as e:
+        print(f'[-] Error: {e}')
 
 def convert_kucoin_to_cointracker(df):
     
-    # Need to split symbol into 'Received Currency' and 'Sent Currency' columns
-    df[['Received Currency', 'Sent Currency']] = df['symbol'].str.split('-', expand=True)
+    #Split by buys and sells
+    sells = df[df['side']=='sell'].copy()
+    buys = df[df['side']=='buy'].copy()
     
-    # Filter on only the columns we care about from Kucoin
-    df = df[['tradeCreatedAt', 'size', 'Received Currency', 'funds', 'Sent Currency', 'fee', 'feeCurrency']]
+    #### Split the buy into two columns with correct position e.g. BTC received currency and USDT sent currency
+    buys[['Received Currency', 'Sent Currency']] = buys['symbol'].str.split('-', expand=True)
+    
+    # Split the sell into two columns with correct position e.g. USDT received currency and BTC sent currency
+    sells[['Sent Currency', 'Received Currency']] = sells['symbol'].str.split('-', expand=True)
+    
+    # Combine the two dataframes back together
+    combined_df = pd.concat([buys,sells]).reset_index(drop=True)
+    
+    # Filter on only the columns Cointracker cares about
+    combined_df = combined_df[['tradeCreatedAt', 'size', 'Received Currency', 'funds', 'Sent Currency', 'fee', 'feeCurrency']]
 
-    # Change the column names to what Cointracker expects
-    df.columns = ['Date', 'Received Quantity', 'Received Currency', 'Sent Quantity', 'Sent Currency', 'Fee Amount', 'Fee Currency']
+    # # Change the column names to what Cointracker expects
+    combined_df.columns = ['Date', 'Received Quantity', 'Received Currency', 'Sent Quantity', 'Sent Currency', 'Fee Amount', 'Fee Currency']
 
-    return df
+    return combined_df
 
 def export_csv(df, filename):
     df.to_csv(filename, index=False)
@@ -38,7 +51,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description=f'Kucoin Margin export CSV to Cointracker compatible CSV file')
     # Positional
-    parser.add_argument('-f', '--file', type=str, metavar='', help="Location of the Kucoin Margin CSV file")
-    parser.add_argument('-o', '--output', type=str, default='./cointracker.csv', metavar='',help="Location to output the Cointracker compatible CSV file")
+    parser.add_argument('-f', '--file', type=str, metavar='', help="Location of the Kucoin Margin History CSV file")
+    parser.add_argument('-o', '--output', type=str, default='./cointracker.csv', metavar='',help="Location to place your Cointracker ready-to-go CSV file")
     args = parser.parse_args()
     main(args)
